@@ -1,12 +1,12 @@
 package com.example.PecetCalc.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "Computers")
 public class Computer {
 
     @Id
@@ -73,6 +73,9 @@ public class Computer {
 
     public void setTenthJanuaryExchangeRate(Date tenthJanuaryExchangeRate) {
         this.tenthJanuaryExchangeRate = tenthJanuaryExchangeRate;
+    }
+
+    public Computer() {
     }
 
     public Computer(long cpuId, String name, int inDollars, int inPln, int exchangeRate, Date thirdJanuaryExchangeRate, Date tenthJanuaryExchangeRate) {

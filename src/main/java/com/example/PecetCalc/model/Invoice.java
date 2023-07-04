@@ -2,22 +2,24 @@ package com.example.PecetCalc.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Invoices")
+@Table(name = "Invoice")
 public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long invId;
+    @Column(name = "id")
+    Long invId;
     String name;
-    @OneToMany
-    List<Computer> computers;
-    int invPriceInPln;
-    int invPriceInUsd;
+    @OneToMany(cascade=CascadeType.PERSIST)
+    List<Computer> computers = new ArrayList<>();
+    double invPriceInPln;
+    double invPriceInUsd;
     Date invDate;
 
     public long getInvId() {
@@ -44,19 +46,19 @@ public class Invoice {
         this.computers = computers;
     }
 
-    public int getInvPriceInPln() {
+    public double getInvPriceInPln() {
         return invPriceInPln;
     }
 
-    public void setInvPriceInPln(int invPriceInPln) {
+    public void setInvPriceInPln(double invPriceInPln) {
         this.invPriceInPln = invPriceInPln;
     }
 
-    public int getInvPriceInUsd() {
+    public double getInvPriceInUsd() {
         return invPriceInUsd;
     }
 
-    public void setInvPriceInUsd(int invPriceInUsd) {
+    public void setInvPriceInUsd(double invPriceInUsd) {
         this.invPriceInUsd = invPriceInUsd;
     }
 
@@ -71,7 +73,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(long invId, String name, List<Computer> computers, int invPriceInPln, int invPriceInUsd, Date invDate) {
+    public Invoice(Long invId, String name, List<Computer> computers, double invPriceInPln, double invPriceInUsd, Date invDate) {
         this.invId = invId;
         this.name = name;
         this.computers = computers;

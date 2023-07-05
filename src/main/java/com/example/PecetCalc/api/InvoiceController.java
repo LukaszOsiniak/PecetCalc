@@ -37,15 +37,17 @@ public class InvoiceController {
     }
 
     @GetMapping()
-    public CollectionModel<Invoice> getAllInvoices() {
+    public List<Invoice> getAllInvoices() {
         List<Invoice> invoices = invoiceRepository.findAll();
-        return CollectionModel.of(invoices, linkTo(methodOn(InvoiceController.class).getAllInvoices()).withSelfRel());
+        //return CollectionModel.of(invoices, linkTo(methodOn(InvoiceController.class).getAllInvoices()).withSelfRel());
+        return invoices;
     }
 
     @PostMapping("/add")
     public ResponseEntity addInvoice(@RequestBody Invoice invoice, @RequestParam Date date) throws URISyntaxException {
-        Double rate = Double.parseDouble(Util.getRateAtDate(date));
+        Double rate = Util.getRateAtDate(date).doubleValue();
         double invoiceSumUSD = Util.sumPriceOfAllComputers(invoice.getComputers());
+        invoice.setInvPriceInUsd(Util.sumPriceOfAllComputers(invoice.getComputers()));
         invoice.setInvPriceInPln(invoiceSumUSD * rate);
         Invoice savedInvoice = invoiceRepository.save(invoice);
         return ResponseEntity.created(new URI("/invoices" + savedInvoice.getInvId())).body(savedInvoice);
@@ -62,5 +64,10 @@ public class InvoiceController {
         currentInvoice.setInvDate(invoice.getInvDate());
         invoiceRepository.save(currentInvoice);
         return ResponseEntity.ok(currentInvoice);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteInvoice(@PathVariable Long id) {
+        invoiceRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

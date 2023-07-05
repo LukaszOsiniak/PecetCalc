@@ -1,5 +1,6 @@
 package com.example.PecetCalc.model;
 
+import com.example.PecetCalc.util.Util;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -13,11 +14,11 @@ public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     Long invId;
     String name;
     @OneToMany(cascade=CascadeType.PERSIST)
     List<Computer> computers = new ArrayList<>();
+    double exchangeRate;
     double invPriceInPln;
     double invPriceInUsd;
     Date invDate;
@@ -46,12 +47,28 @@ public class Invoice {
         this.computers = computers;
     }
 
+    public double getExchangeRate() {
+        return exchangeRate;
+    }
+
+    public void setExchangeRate(double exchangeRate) {
+        if (exchangeRate > 0) {
+            this.exchangeRate = exchangeRate;
+        } else {
+            throw new IllegalArgumentException("Exchange rate is not valid");
+        }
+    }
+
     public double getInvPriceInPln() {
         return invPriceInPln;
     }
 
     public void setInvPriceInPln(double invPriceInPln) {
-        this.invPriceInPln = invPriceInPln;
+        if (invPriceInPln > 0) {
+            this.invPriceInPln = invPriceInPln;
+        } else {
+            throw new IllegalArgumentException("Price in PLN is not valid");
+        }
     }
 
     public double getInvPriceInUsd() {
@@ -59,7 +76,11 @@ public class Invoice {
     }
 
     public void setInvPriceInUsd(double invPriceInUsd) {
-        this.invPriceInUsd = invPriceInUsd;
+        if (invPriceInUsd > 0) {
+            this.invPriceInUsd = invPriceInUsd;
+        } else {
+            throw new IllegalArgumentException("Price in USD is not valid");
+        }
     }
 
     public Date getInvDate() {
@@ -73,15 +94,14 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(Long invId, String name, List<Computer> computers, double invPriceInPln, double invPriceInUsd, Date invDate) {
+    public Invoice(Long invId, String name, List<Computer> computers, double invPriceInUsd, Date invDate) {
         this.invId = invId;
         this.name = name;
         this.computers = computers;
-        this.invPriceInPln = invPriceInPln;
+        this.exchangeRate = Util.getRateAtDate(invDate).doubleValue();
         this.invPriceInUsd = invPriceInUsd;
         this.invDate = invDate;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

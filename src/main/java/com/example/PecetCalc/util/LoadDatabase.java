@@ -21,27 +21,25 @@ public class LoadDatabase {
     private Date firstDate = new Date();
     List<Computer> list = new ArrayList<>();
 
-//    @Bean
-//    CommandLineRunner initializeDatabasee(ComputerRepository computerRepository) {
-//
-//        return args -> {
-//            log.info("Preloading " + computerRepository.save(new Computer(1L, "CPU1", 1)));
-//            log.info("Preloading " + computerRepository.save(new Computer(2L, "CPU2", 2)));
-//            log.info("Preloading " + computerRepository.save(new Computer(3L, "CPU3", 3)));
-//            log.info("Preloading " + computerRepository.save(new Computer(4L, "CPU4", 1)));
-//            List<Computer> computers = List.of(computerRepository.getReferenceById(1L), computerRepository.getReferenceById(2L), computerRepository.getReferenceById(3L), computerRepository.getReferenceById(4L));
-//            log.info(Util.getRateAtDate(firstDate));
-//        };
-//    }
-//    @Bean
-//    CommandLineRunner initializeDatabase(InvoiceRepository invoiceRepository) {
-//
-//        return args -> {
-//            log.info("Preloading " + invoiceRepository.save(new Invoice(1L, "First", list, 123, 321, firstDate)));
-//            log.info("Preloading " + invoiceRepository.save(new Invoice(2L, "Second",list, 456, 654, firstDate)));
-//            log.info("Preloading " + invoiceRepository.save(new Invoice(3L, "Third", list,789, 987, firstDate)));
-//            log.info("Preloading " + invoiceRepository.save(new Invoice(4L, "Fourth",list, 0, 0, firstDate)));
-//            log.info(Util.getRateAtDate(firstDate));
-//        };
-//    }
+    @Bean
+    CommandLineRunner initializeDatabasee(ComputerRepository computerRepository) {
+
+        return args -> {
+            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(1L).name("1").priceInUSD(345).build()));
+            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(1L).name("1").priceInUSD(543).build()));
+            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(1L).name("1").priceInUSD(346).build()));
+        };
+    }
+
+    @Bean
+    CommandLineRunner initializeDatabase(InvoiceRepository invoiceRepository) {
+
+        return args -> {
+            log.info("Preloading " + invoiceRepository.save(new Invoice(1L, "First", list, 321, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(2L, "Second", list, 654, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(3L, "Third", list, 987, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(4L, "Fourth", list, 0, firstDate)));
+            log.info(Util.getRateAtDate(firstDate).toString());
+        };
+    }
 }

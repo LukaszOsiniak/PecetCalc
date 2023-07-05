@@ -2,8 +2,6 @@ package com.example.PecetCalc.model;
 
 import jakarta.persistence.*;
 
-
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -12,14 +10,11 @@ public class Computer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     Long cpuId;
     String name;
-    int priceInUSD;
-    int priceInPln;
-    int exchangeRate;
-    Date thirdJanuaryExchangeRate;
-    Date tenthJanuaryExchangeRate;
+    double priceInUSD;
+    double priceInPln;
+    double exchangeRate;
     @ManyToOne
     Invoice invoice;
 
@@ -39,44 +34,40 @@ public class Computer {
         this.name = name;
     }
 
-    public int getPriceInUSD() {
+    public double getPriceInUSD() {
         return priceInUSD;
     }
 
-    public void setPriceInUSD(int priceInUSD) {
-        this.priceInUSD = priceInUSD;
+    public void setPriceInUSD(double priceInUSD) {
+        if (priceInUSD > 0) {
+            this.priceInUSD = priceInUSD;
+        } else {
+            throw new IllegalArgumentException("Price in USD is not valid");
+        }
     }
 
-    public int getPriceInPln() {
+    public double getPriceInPln() {
         return priceInPln;
     }
 
-    public void setPriceInPln(int priceInPln) {
-        this.priceInPln = priceInPln;
+    public void setPriceInPln(double priceInPln) {
+        if (priceInPln > 0) {
+            this.priceInPln = priceInPln;
+        } else {
+            throw new IllegalArgumentException("Price in PLN is not valid");
+        }
     }
 
-    public int getExchangeRate() {
+    public double getExchangeRate() {
         return exchangeRate;
     }
 
-    public void setExchangeRate(int exchangeRate) {
-        this.exchangeRate = exchangeRate;
-    }
-
-    public Date getThirdJanuaryExchangeRate() {
-        return thirdJanuaryExchangeRate;
-    }
-
-    public void setThirdJanuaryExchangeRate(Date thirdJanuaryExchangeRate) {
-        this.thirdJanuaryExchangeRate = thirdJanuaryExchangeRate;
-    }
-
-    public Date getTenthJanuaryExchangeRate() {
-        return tenthJanuaryExchangeRate;
-    }
-
-    public void setTenthJanuaryExchangeRate(Date tenthJanuaryExchangeRate) {
-        this.tenthJanuaryExchangeRate = tenthJanuaryExchangeRate;
+    public void setExchangeRate(double exchangeRate) {
+        if (exchangeRate > 0) {
+            this.exchangeRate = exchangeRate;
+        } else {
+            throw new IllegalArgumentException("Exchange rate is not valid");
+        }
     }
 
     public void setCpuId(Long cpuId) {
@@ -90,13 +81,60 @@ public class Computer {
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
+
     public Computer() {
     }
+    public Computer(ComputerBuilder builder) {
+        this.cpuId = builder.cpuId;
+        this.name = builder.name;
+        this.priceInUSD = builder.priceInUSD;
+        this.priceInPln = builder.priceInPln;
+        this.invoice = builder.invoice;
+    }
 
-    public Computer(Long cpuId, String name, int priceInUSD) {
-        this.cpuId = cpuId;
-        this.name = name;
-        this.priceInUSD = priceInUSD;
+    public static class ComputerBuilder {
+        private Long cpuId;
+        private String name;
+        private int priceInUSD;
+        private int priceInPln;;
+        private Invoice invoice;
+
+        public ComputerBuilder cpuId(Long cpuId) {
+            this.cpuId = cpuId;
+            return this;
+        }
+
+        public ComputerBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ComputerBuilder priceInUSD(int priceInUSD) {
+            if (priceInUSD > 0) {
+                this.priceInUSD = priceInUSD;
+                return this;
+            } else {
+                throw new IllegalArgumentException("Price in USD is not valid");
+            }
+        }
+
+        public ComputerBuilder priceInPln(int priceInPln) {
+            if (priceInPln > 0) {
+                this.priceInPln = priceInPln;
+                return this;
+            } else {
+                throw new IllegalArgumentException("Price in PLN is not valid");
+            }
+        }
+
+        public ComputerBuilder invoice(Invoice invoice) {
+            this.invoice = invoice;
+            return this;
+        }
+
+        public Computer build() {
+            return new Computer(this);
+        }
     }
 
     @Override
@@ -107,8 +145,6 @@ public class Computer {
                 ", priceInUSD=" + priceInUSD +
                 ", priceInPln=" + priceInPln +
                 ", exchangeRate=" + exchangeRate +
-                ", thirdJanuaryExchangeRate=" + thirdJanuaryExchangeRate +
-                ", tenthJanuaryExchangeRate=" + tenthJanuaryExchangeRate +
                 ", invoice=" + invoice +
                 '}';
     }
@@ -118,11 +154,11 @@ public class Computer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Computer computer = (Computer) o;
-        return priceInUSD == computer.priceInUSD && priceInPln == computer.priceInPln && exchangeRate == computer.exchangeRate && Objects.equals(cpuId, computer.cpuId) && Objects.equals(name, computer.name) && Objects.equals(thirdJanuaryExchangeRate, computer.thirdJanuaryExchangeRate) && Objects.equals(tenthJanuaryExchangeRate, computer.tenthJanuaryExchangeRate) && Objects.equals(invoice, computer.invoice);
+        return priceInUSD == computer.priceInUSD && priceInPln == computer.priceInPln && exchangeRate == computer.exchangeRate && Objects.equals(cpuId, computer.cpuId) && Objects.equals(name, computer.name) && Objects.equals(invoice, computer.invoice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cpuId, name, priceInUSD, priceInPln, exchangeRate, thirdJanuaryExchangeRate, tenthJanuaryExchangeRate, invoice);
+        return Objects.hash(cpuId, name, priceInUSD, priceInPln, exchangeRate, invoice);
     }
 }

@@ -89,7 +89,7 @@ public class Computer {
         this.name = builder.name;
         this.priceInUSD = builder.priceInUSD;
         this.priceInPln = builder.priceInPln;
-        this.invoice = builder.invoice;
+        //this.invoice = builder.invoice;
     }
 
     public static class ComputerBuilder {
@@ -97,7 +97,7 @@ public class Computer {
         private String name;
         private int priceInUSD;
         private int priceInPln;;
-        private Invoice invoice;
+        //private Invoice invoice;
 
         public ComputerBuilder cpuId(Long cpuId) {
             this.cpuId = cpuId;
@@ -127,10 +127,10 @@ public class Computer {
             }
         }
 
-        public ComputerBuilder invoice(Invoice invoice) {
-            this.invoice = invoice;
-            return this;
-        }
+//        public ComputerBuilder invoice(Invoice invoice) {
+//            this.invoice = invoice;
+//            return this;
+//        }
 
         public Computer build() {
             return new Computer(this);

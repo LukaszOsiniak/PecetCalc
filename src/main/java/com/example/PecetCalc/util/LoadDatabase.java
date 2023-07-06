@@ -22,12 +22,12 @@ public class LoadDatabase {
     List<Computer> list = new ArrayList<>();
 
     @Bean
-    CommandLineRunner initializeDatabasee(ComputerRepository computerRepository) {
+    CommandLineRunner initializeComputersDatabase(ComputerRepository computerRepository) {
 
         return args -> {
             log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(1L).name("1").priceInUSD(345).build()));
-            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(1L).name("1").priceInUSD(543).build()));
-            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(1L).name("1").priceInUSD(346).build()));
+            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(2L).name("2").priceInUSD(543).build()));
+            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(3L).name("3").priceInUSD(346).build()));
         };
     }
 

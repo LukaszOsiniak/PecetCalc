@@ -20,6 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/computers")
+@CrossOrigin(origins="http://localhost:3000")
 public class ComputerController {
 
     private final ComputerRepository computerRepository;
@@ -44,7 +45,7 @@ public class ComputerController {
         return computers;
     }
 
-    @PostMapping("/addCPU")
+    @PostMapping()
     public ResponseEntity addComputer(@RequestBody Computer computer) throws URISyntaxException {
         Computer savedComputer = computerRepository.save(computer);
         return ResponseEntity.created(new URI("/computers" + savedComputer.getCpuId())).body(savedComputer);

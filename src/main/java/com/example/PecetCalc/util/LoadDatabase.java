@@ -25,9 +25,16 @@ public class LoadDatabase {
     CommandLineRunner initializeComputersDatabase(ComputerRepository computerRepository) {
 
         return args -> {
-            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(1L).name("1").priceInUSD(345).build()));
-            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(2L).name("2").priceInUSD(543).build()));
-            log.info("Preloading " + computerRepository.save(new Computer.ComputerBuilder().cpuId(3L).name("3").priceInUSD(346).build()));
+            log.info("Preloading " + computerRepository.save(new Computer(1L, "Fir", 100.0) ));
+            log.info("Preloading " + computerRepository.save(new Computer(2L, "Sec", 200.0) ));
+            log.info("Preloading " + computerRepository.save(new Computer(3L, "Thi", 300.0) ));
+            log.info("Preloading " + computerRepository.save(new Computer(4L, "Fou", 400.0) ));
+            log.info("Preloading " + computerRepository.save(new Computer(4L, "Fif", 500.0) ));
+            log.info("Preloading " + computerRepository.save(new Computer(4L, "Six", 600.0) ));
+            log.info("Preloading " + computerRepository.save(new Computer(4L, "Sev", 700.0) ));
+            log.info("Preloading " + computerRepository.save(new Computer(4L, "Eig", 800.0) ));
+            log.info("Preloading " + computerRepository.save(new Computer(4L, "Nin", 900.0) ));
+            log.info("Preloading " + computerRepository.save(new Computer(4L, "Ten", 1000.0) ));
         };
     }
 
@@ -35,10 +42,16 @@ public class LoadDatabase {
     CommandLineRunner initializeDatabase(InvoiceRepository invoiceRepository) {
 
         return args -> {
-            log.info("Preloading " + invoiceRepository.save(new Invoice(1L, "First", list, 321, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(2L, "Second", list, 654, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(3L, "Third", list, 987, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(4L, "Fourth", list, 0, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(1L, "First", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(2L, "Second", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(3L, "Third", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(4L, "Fourth", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(5L, "Fifth", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(6L, "Sixth", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(7L, "Seventh", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(8L, "Eighth", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(9L, "Ninth", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(10L, "Tenth", list, 0D, firstDate)));
             log.info(Util.getRateAtDate(firstDate).toString());
         };
     }

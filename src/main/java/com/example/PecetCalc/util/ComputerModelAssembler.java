@@ -14,6 +14,8 @@ public class ComputerModelAssembler implements RepresentationModelAssembler<Comp
 
     @Override
     public EntityModel<Computer> toModel(Computer computer) {
-        return EntityModel.of(computer, linkTo(methodOn(ComputerController.class).getComputer(computer.getCpuId())).withSelfRel(), linkTo(methodOn(ComputerController.class).getAllComputers()).withRel("computers"));
+        //return EntityModel.of(computer, linkTo(methodOn(ComputerController.class).getComputer(computer.getCpuId())).withSelfRel(), linkTo(methodOn(ComputerController.class).getAllComputers()).withRel("computers"));
+        Object EntityModel = null;
+        return (org.springframework.hateoas.EntityModel<Computer>) EntityModel;
     }
 }

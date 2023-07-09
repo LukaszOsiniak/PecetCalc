@@ -2,6 +2,10 @@ package com.example.PecetCalc.model;
 
 import com.example.PecetCalc.util.Util;
 import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,21 +13,29 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Invoice")
+@Table(name = "Invoices")
+@XmlRootElement(name = "Invoice")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @XmlTransient
     Long invId;
+    @XmlTransient
     String name;
-    @OneToMany(cascade=CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST)
     List<Computer> computers = new ArrayList<>();
-    double exchangeRate;
-    double invPriceInPln;
-    double invPriceInUsd;
+    @XmlTransient
+    Double exchangeRate;
+    @XmlTransient
+    Double invPriceInPln;
+    @XmlTransient
+    Double invPriceInUsd;
+    @XmlTransient
     Date invDate;
 
-    public long getInvId() {
+    public Long getInvId() {
         return invId;
     }
 
@@ -47,11 +59,11 @@ public class Invoice {
         this.computers = computers;
     }
 
-    public double getExchangeRate() {
+    public Double getExchangeRate() {
         return exchangeRate;
     }
 
-    public void setExchangeRate(double exchangeRate) {
+    public void setExchangeRate(Double exchangeRate) {
         if (exchangeRate > 0) {
             this.exchangeRate = exchangeRate;
         } else {
@@ -59,11 +71,11 @@ public class Invoice {
         }
     }
 
-    public double getInvPriceInPln() {
+    public Double getInvPriceInPln() {
         return invPriceInPln;
     }
 
-    public void setInvPriceInPln(double invPriceInPln) {
+    public void setInvPriceInPln(Double invPriceInPln) {
         if (invPriceInPln > 0) {
             this.invPriceInPln = invPriceInPln;
         } else {
@@ -71,11 +83,11 @@ public class Invoice {
         }
     }
 
-    public double getInvPriceInUsd() {
+    public Double getInvPriceInUsd() {
         return invPriceInUsd;
     }
 
-    public void setInvPriceInUsd(double invPriceInUsd) {
+    public void setInvPriceInUsd(Double invPriceInUsd) {
         if (invPriceInUsd > 0) {
             this.invPriceInUsd = invPriceInUsd;
         } else {
@@ -94,36 +106,24 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(Long invId, String name, List<Computer> computers, double invPriceInUsd, Date invDate) {
+    public Invoice(Long invId, String name, List<Computer> computers, Double invPriceInUsd, Date invDate) {
         this.invId = invId;
         this.name = name;
         this.computers = computers;
-        this.exchangeRate = Util.getRateAtDate(invDate).doubleValue();
         this.invPriceInUsd = invPriceInUsd;
         this.invDate = invDate;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Invoice invoice = (Invoice) o;
-        return invId == invoice.invId && invPriceInPln == invoice.invPriceInPln && invPriceInUsd == invoice.invPriceInUsd && Objects.equals(name, invoice.name) && Objects.equals(computers, invoice.computers) && Objects.equals(invDate, invoice.invDate);
+        return Objects.equals(invId, invoice.invId) && Objects.equals(name, invoice.name) && Objects.equals(computers, invoice.computers) && Objects.equals(exchangeRate, invoice.exchangeRate) && Objects.equals(invPriceInPln, invoice.invPriceInPln) && Objects.equals(invPriceInUsd, invoice.invPriceInUsd) && Objects.equals(invDate, invoice.invDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(invId, name, computers, invPriceInPln, invPriceInUsd, invDate);
-    }
-
-    @Override
-    public String toString() {
-        return "Invoice{" +
-                "invId=" + invId +
-                ", name='" + name + '\'' +
-                ", computers=" + computers +
-                ", invPriceInPln=" + invPriceInPln +
-                ", invPriceInUsd=" + invPriceInUsd +
-                ", invDate=" + invDate +
-                '}';
+        return Objects.hash(invId, name, computers, exchangeRate, invPriceInPln, invPriceInUsd, invDate);
     }
 }

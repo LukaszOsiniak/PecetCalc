@@ -1,6 +1,7 @@
 package com.example.PecetCalc.util;
 
 import com.example.PecetCalc.api.InvoiceController;
+import com.example.PecetCalc.model.Computer;
 import com.example.PecetCalc.model.Invoice;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -14,6 +15,8 @@ public class InvoiceModelAssembler implements RepresentationModelAssembler<Invoi
 
     @Override
     public EntityModel<Invoice> toModel(Invoice invoice) {
-        return EntityModel.of(invoice, linkTo(methodOn(InvoiceController.class).getInvoice(invoice.getInvId())).withSelfRel(), linkTo(methodOn(InvoiceController.class).getAllInvoices()).withRel("invoices"));
+        //return EntityModel.of(invoice, linkTo(methodOn(InvoiceController.class).getInvoice(invoice.getInvId())).withSelfRel(), linkTo(methodOn(InvoiceController.class).getAllInvoices()).withRel("invoices"));
+        Object EntityModel = null;
+        return (org.springframework.hateoas.EntityModel<Invoice>) EntityModel;
     }
 }

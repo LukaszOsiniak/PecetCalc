@@ -5,81 +5,83 @@ import {Card, Button, Form} from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
- class Computer extends Component {
+ class Invoice extends Component {
 
         constructor(props){
             super(props);
             this.state = this.initialState;
-            this.computerChange = this.computerChange.bind(this);
-            this.submitComputer = this.submitComputer.bind(this);
-
+            this.invoiceChange = this.invoiceChange.bind(this);
+            this.submitInvoice = this.submitInvoice.bind(this);
         }
 
        initialState= {
-            cpuId: '', name: '', priceInUSD: '', priceInPLN: '', exchangeRate: ''
+            invId: '', name: '', computers: '', exchangeRate: '', invPriceInPln: '', invPriceInUsd: '', invDate:'',
        }
 
-       resetComputer = () => {
+       resetInvoice = () => {
             this.setState(()=> this.initialState);
        };
 
-        updateComputer = event => {
+        updateInvoice = event => {
             event.preventDefault();
 
-            const computer = {
-               cpuId: this.state.cpuId,
+            const invoice = {
+               invId: this.state.invId,
                name: this.state.name,
-                priceInUSD: this.state.priceInUSD,
-                priceInPLN:this.state.priceInPLN,
-                exchangeRate: this.state.exchangeRate
+               computers: this.state.computers,
+               exchangeRate:this.state.exchangeRate,
+               invPriceInPln: this.state.invPriceInPln,
+               invPriceInUsd: this.state.invPriceInUsd,
+               invDate: this.state.invDate
             };
 
-            axios.put('http://localhost:8080/computers', computer)
+            axios.put('http://localhost:8080/invoices', invoice)
             .then(response => {
                 this.setState({"show": true});
             });
             this.setState(this.initialState);
         }
 
-       submitComputer = event => {
+       submitInvoice = event => {
            event.preventDefault();
 
-           const computer = {
-                cpuId: this.state.cpuId,
-                name: this.state.name,
-                priceInUSD: this.state.priceInUSD,
-                priceInPLN: this.state.priceInPLN,
-                exchangeRate: this.state.exchangeRate,
+           const invoice = {
+               invId: this.state.invId,
+               name: this.state.name,
+               computers: this.state.computers,
+               exchangeRate:this.state.exchangeRate,
+               invPriceInPln: this.state.invPriceInPln,
+               invPriceInUsd: this.state.invPriceInUsd,
+               invDate: this.state.invDate
            };
 
-           axios.post("http://localhost:8080/computers", computer).then((response) => {
+           axios.post("http://localhost:8080/invoices", invoice).then((response) => {
                    this.setState(this.initialState);
-                   alert("Computer Saved Successfully");
-
+                   alert("Invoice Saved Successfully");
            });
        };
 
-       computerChange = event => {
+       invoiceChange = event => {
             this.setState({
                 [event.target.name]:event.target.value
             });
        }
 
        render(){
-            const{cpuId, name, priceInUSD, priceInPLN, exchangeRate, invoice} = this.state;
+            const{invId, name, computers, exchangeRate, invPriceInPln, invPriceInUsd, invDate} = this.state;
 
        return (
                <Card className={"border border-dark bg-dark text-white"}>
-                  <Card.Header> Add Computer </Card.Header>
+                  <Card.Header> Add Invoice </Card.Header>
                   <Card.Body>
-                        <Form onReset={this.resetComputer} onSubmit={this.submitComputer} id="computerFormId">
+                        <Form onReset={this.resetInvoice} onSubmit={this.submitInvoice} id="computerFormId">
                            <Form.Group controlId="formGridCpuId">
                              <Form.Label>Number</Form.Label>
                              <Form.Control required autoComplete="off"
                                  type="id"
-                                 name='cpuId'
-                                 value={cpuId}
-                                 onChange={this.computerChange}
+                                 name='invId'
+                                 value={invId}
+                                 onChange={this.invoiceChange}
                                  className={"bg-dark text-white"}
                                  placeholder="cpuId" />
                            </Form.Group>
@@ -89,29 +91,29 @@ import { useNavigate } from "react-router-dom";
                                 type="text"
                                 name='name'
                                 value={name}
-                                onChange={this.computerChange}
+                                onChange={this.invoiceChange}
                                 className={"bg-dark text-white"}
                                 placeholder="Enter name" />
                           </Form.Group>
-                          <Form.Group controlId="formGridPriceInUSD">
+                          <Form.Group controlId="formGridPriceInPLN">
                             <Form.Label>Price In USD</Form.Label>
                             <Form.Control required autoComplete="off"
                                 type="text"
-                                name='priceInUSD'
-                                value={priceInUSD}
-                                onChange={this.computerChange}
+                                name='invPriceInPln'
+                                value={invPriceInPln}
+                                onChange={this.invoiceChange}
                                 className={"bg-dark text-white"}
-                                placeholder="priceInUSD" />
+                                placeholder="Enter price in PLN" />
                           </Form.Group>
-                          <Form.Group controlId="priceInPLN">
-                             <Form.Label>Price In PLN</Form.Label>
+                          <Form.Group controlId="invPriceInUsd">
+                             <Form.Label>Price In USD</Form.Label>
                              <Form.Control required autoComplete="off"
                                  type="text"
-                                 name='priceInPLN'
-                                 value={priceInPLN}
-                                 onChange={this.computerChange}
+                                 name='invPriceInUsd'
+                                 value={invPriceInUsd}
+                                 onChange={this.invoiceChange}
                                  className={"bg-dark text-white"}
-                                 placeholder="priceInPLN" />
+                                 placeholder="Enter price in USD" />
                            </Form.Group>
                            <Form.Group controlId="formGridExchangeRate">
                               <Form.Label>Exchange Rate</Form.Label>
@@ -119,10 +121,20 @@ import { useNavigate } from "react-router-dom";
                                   type="number"
                                   name='exchangeRate'
                                   value={exchangeRate}
-                                  onChange={this.computerChange}
+                                  onChange={this.invoiceChange}
                                   className={"bg-dark text-white"}
                                   placeholder="exchangeRate" />
                             </Form.Group>
+                            <Form.Group controlId="formGridExchangeRate">
+                               <Form.Label>Exchange Rate</Form.Label>
+                               <Form.Control required autoComplete="off"
+                                   type="number"
+                                   name='invDate'
+                                   value={invDate}
+                                   onChange={this.invoiceChange}
+                                   className={"bg-dark text-white"}
+                                   placeholder="Date of exchange" />
+                             </Form.Group>
                           <Button size="sm" variant="success" type="submit">
                             Submit
                           </Button> {' '}
@@ -136,4 +148,4 @@ import { useNavigate } from "react-router-dom";
        }
 }
 
-export default Computer;
+export default Invoice;

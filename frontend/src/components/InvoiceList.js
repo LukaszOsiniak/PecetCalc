@@ -44,7 +44,7 @@ export default class InvoiceList extends Component {
 
         searchInvoice=(currentPage)=> {
             currentPage=currentPage-1;
-            axios.get('http://localhost:8080/invoices/'+this.state.search)
+            axios.get('http://localhost:8080/invoices/search/'+this.state.search)
             .then(response => response.data).then((data) => {
                  this.setState({invoices:data.content});
                });
@@ -122,8 +122,7 @@ export default class InvoiceList extends Component {
                                         <td>{dayjs(invoice.invDate).format("MM/DD/YYYY")} </td>
                                         <td>
                                             <ButtonGroup>
-                                                <Link to={"" + invoice.invId} className="btn btn-sm btn-outline-primary"> Edit </Link>{" "}
-                                                <Link to={`/invoices/${invoice.invId}`} className="btn btn-outline-dark">Edit</Link>
+                                                <Link to={`/invoices/${invoice.invId}`} className="btn btn-sm btn-outline-primary">Edit</Link>
                                                 <button className="btn btn-outline-danger" onClick={() => { this.deleteInvoice(invoice.invId) }}>Delete</button> {''}
                                             </ButtonGroup>
                                          </td>

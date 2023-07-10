@@ -2,8 +2,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios';
 import {useParams} from "react-router-dom";
 function UpdateInvoice() {
-    const {id} = useParams(); // getting url id
-    const URL = `http://localhost:8080/invoices/${id}`;
+    const {id} = useParams();
 
     useEffect(()=>{
         getInvoiceById();
@@ -21,7 +20,7 @@ function UpdateInvoice() {
         updateDataToServer(invoice)
     }
     const updateDataToServer=(data) =>{
-        axios.put(URL,data).then(
+        axios.put("http://localhost:8080/invoices/"+ id,data).then(
            (response)=>{
                    alert("Invoice Updated Successfully");
             },(error)=>{
@@ -31,25 +30,25 @@ function UpdateInvoice() {
     };
 
     const getInvoiceById= async e =>{
-        const invoicesInfo = await axios.get(URL);
+        const invoicesInfo = await axios.get("http://localhost:8080/invoices/" + id);
         setInvoice(invoicesInfo.data);
     }
 
     return (
         <div>
             <div className="container">
-            <div className="w-75 mx-auto shadow p-5 mt-2 bg-light">
+            <div className="border border-dark bg-dark text-white">
                 <div class="jumbotron">
-                    <h1 class="display-4 text-center">Update Invoice</h1>
+                    <h4 >Update Invoice</h4>
                     <div>
                     <form onSubmit={e => FormHandle(e)}>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Number</label>
-                            <input type="text" class="form-control" name="invId"   placeholder="Enter Here" value={invId} onChange={(e) =>onInputChange(e)} />
+                            <input type="text" class="form-control" name="invId"   placeholder="Enter Here" value={invId} onChange={(e) =>onInputChange(e)} required/>
                         </div>
                         <div class="form-group">
                              <label for="exampleInputEmail1">Name</label>
-                             <input type="text" class="form-control" name="name"   placeholder="Enter Here" value={name} onChange={(e) =>onInputChange(e)} />
+                             <input type="text" class="form-control" name="name"   placeholder="Enter Here" value={name} onChange={(e) =>onInputChange(e)} required/>
                          </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Computers</label>
@@ -57,15 +56,15 @@ function UpdateInvoice() {
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Exchange Rate </label>
-                            <input type="text" class="form-control" name="exchangeRate"   placeholder="Enter Here" value={exchangeRate} onChange={(e) =>onInputChange(e)} />
+                            <input type="text" class="form-control" name="exchangeRate"   placeholder="Enter Here" value={exchangeRate} onChange={(e) =>onInputChange(e)} required/>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Price In PLN</label>
-                            <input type="text" class="form-control" name="invPriceInPln"   placeholder="Enter Here" value={invPriceInPln} onChange={(e) =>onInputChange(e)} />
+                            <input type="text" class="form-control" name="invPriceInPln"   placeholder="Enter Here" value={invPriceInPln} onChange={(e) =>onInputChange(e)} required/>
                         </div>
                         <div class="form-group">
                              <label for="exampleInputEmail1">Price In USD</label>
-                             <input type="text" class="form-control" name="invPriceInUsd"   placeholder="Enter Here" value={invPriceInUsd} onChange={(e) =>onInputChange(e)} />
+                             <input type="text" class="form-control" name="invPriceInUsd"   placeholder="Enter Here" value={invPriceInUsd} onChange={(e) =>onInputChange(e)} required/>
                          </div>
                          <div class="form-group">
                               <label for="exampleInputEmail1">Invoice Date</label>

@@ -6,8 +6,7 @@ class Welcome extends React.Component {
        render(){
        return (
                  <div class="bg-dark text-white">
-                     <h1 class="display-2">Computer Shop</h1>
-                     <p class="lead">Best quality, best prices</p>
+                     <h1 >Computer Shop</h1>
                  </div>
           );
        }

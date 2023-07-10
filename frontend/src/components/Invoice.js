@@ -83,7 +83,7 @@ import { useNavigate } from "react-router-dom";
                                  value={invId}
                                  onChange={this.invoiceChange}
                                  className={"bg-dark text-white"}
-                                 placeholder="cpuId" />
+                                 placeholder="invId" />
                            </Form.Group>
                           <Form.Group controlId="formGridName">
                             <Form.Label>Name</Form.Label>

@@ -45,7 +45,7 @@ export default class ComputerList extends Component {
 
         searchComputer=(currentPage)=> {
             currentPage=currentPage-1;
-            axios.get('http://localhost:8080/computers/'+this.state.search)
+            axios.get('http://localhost:8080/computers/search/'+this.state.search)
             .then(response => response.data).then((data) => {
                  this.setState({computers:data.content});
                });
@@ -113,8 +113,7 @@ export default class ComputerList extends Component {
                                    <td>{computer.invoice} </td>
                                    <td>
                                        <ButtonGroup>
-                                           <Link to={"" + computer.cpuId} className="btn btn-sm btn-outline-primary"> Edit </Link>{" "}
-                                           <Link to={`/computers/${computer.cpuId}`} className="btn btn-outline-dark">Edit</Link>
+                                           <Link to={`/computers/${computer.cpuId}`} className="btn btn-sm btn-outline-primary">Edit</Link>
                                            <button className="btn btn-outline-danger" onClick={() => { this.deleteComputer(computer.cpuId) }}>Delete</button> {''}
                                        </ButtonGroup>
                                     </td>

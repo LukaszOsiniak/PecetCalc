@@ -1,20 +1,18 @@
 package com.example.PecetCalc.api;
 
 import com.example.PecetCalc.model.Computer;
+import com.example.PecetCalc.model.Invoice;
 import com.example.PecetCalc.util.ComputerModelAssembler;
 import com.example.PecetCalc.util.RecordNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/computers")
@@ -30,10 +28,9 @@ public class ComputerController {
         this.computerAssembler = computerAssembler;
     }
 
-    @GetMapping("/record/{id}")
-    public EntityModel<Computer> getComputer(@PathVariable Long id) {
-        Computer computer = computerRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
-        return computerAssembler.toModel(computer);
+    @GetMapping("/{id}")
+    public ResponseEntity<Computer> getComputer(@PathVariable Long id) {
+        return new ResponseEntity<Computer>(computerRepository.findById(id).get(), HttpStatus.OK);
     }
 
     @GetMapping()
@@ -41,16 +38,10 @@ public class ComputerController {
         return computerRepository.findAll(pageable);
     }
 
-    @GetMapping("/{keyword}")
+    @GetMapping("/search/{keyword}")
     public Page<Computer> getComputersWithName(Pageable pageable, @PathVariable String keyword) {
         return computerRepository.findAll(pageable, keyword);
     }
-
-//    @GetMapping("test")
-//    public List<Computer> getAllComputers() {//        List<Computer> computers = computerRepository.findAll();
-//        // return CollectionModel.of(computers, linkTo(methodOn(ComputerController.class).getAllComputers()).withSelfRel());
-//        return computers;
-//    }
 
     @PostMapping()
     public ResponseEntity addComputer(@RequestBody Computer computer) throws URISyntaxException {

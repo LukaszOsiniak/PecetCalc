@@ -1,6 +1,5 @@
 package com.example.PecetCalc.model;
 
-import com.example.PecetCalc.util.Util;
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -14,25 +13,20 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Invoices")
-@XmlRootElement(name = "Invoice")
+@XmlRootElement(name = "invoice")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @XmlTransient
     Long invId;
-    @XmlTransient
     String name;
     @OneToMany(cascade = CascadeType.PERSIST)
     List<Computer> computers = new ArrayList<>();
-    @XmlTransient
     Double exchangeRate;
-    @XmlTransient
     Double invPriceInPln;
-    @XmlTransient
     Double invPriceInUsd;
-    @XmlTransient
+
     Date invDate;
 
     public Long getInvId() {

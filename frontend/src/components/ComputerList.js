@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {  Card, Table, ButtonGroup, Button, InputGroup, FormControl} from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import dayjs from "dayjs";
 
 export default class ComputerList extends Component {
 
@@ -12,10 +13,9 @@ export default class ComputerList extends Component {
                 computers:[],
                 search:'',
                 currentPage:1,
-                recordPerPage:3,
+                recordPerPage:10,
             };
         }
-
 
         componentDidMount(){
              this.getComputersByPagination(this.state.currentPage);
@@ -75,8 +75,19 @@ export default class ComputerList extends Component {
             );
         };
 
+        sortByName = () => {
+            const arr = this.state.computers.sort((a, b) => (a.name > b.name) ? 1: -1);
+            this.setState({invoices: arr});
+        }
+
+        sortByDate = () => {
+            const arr = this.state.computers.sort((a,b) => new Date(a.accDate) - new Date(b.accDate));
+            this.setState({computers: arr});
+        }
+
+
        render(){
-                const {computers, currentPage, totalPages,recordPerPage,search} = this.state;
+                const {computers, currentPage, totalPages, recordPerPage, search} = this.state;
 
              return (
                <Card className={"border border-dark bg-dark text-white"}>
@@ -90,12 +101,13 @@ export default class ComputerList extends Component {
                      <Table bordered hover striped variant = "dark">
                          <thead>
                                 <tr>
-                                  <th>Number</th>
-                                  <th>Name</th>
+                                  <th>Number </th>
+                                  <th>Name <Button size="sm" type="sort" onClick={this.sortByName}> Sort</Button></th>
                                   <th>Price In USD</th>
                                   <th>Price In PLN</th>
                                   <th>Exchange Rate</th>
                                   <th>Invoice</th>
+                                  <th>Accounting Date <Button size="sm" type="sort" onClick={this.sortByDate}> Sort</Button> </th>
                                 </tr>
                          </thead>
                          <tbody>
@@ -111,6 +123,7 @@ export default class ComputerList extends Component {
                                    <td>{computer.priceInPLN} </td>
                                    <td>{computer.exchangeRate} </td>
                                    <td>{computer.invoice} </td>
+                                   <td>{dayjs(computer.accDate).format("MM/DD/YYYY")} </td>
                                    <td>
                                        <ButtonGroup>
                                            <Link to={`/computers/${computer.cpuId}`} className="btn btn-sm btn-outline-primary">Edit</Link>

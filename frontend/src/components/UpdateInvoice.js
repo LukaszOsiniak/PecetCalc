@@ -44,11 +44,11 @@ function UpdateInvoice() {
                     <form onSubmit={e => FormHandle(e)}>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Number</label>
-                            <input type="text" class="form-control" name="invId"   placeholder="Enter Here" value={invId} onChange={(e) =>onInputChange(e)} required/>
+                            <input type="text" class="form-control" name="invId"   placeholder="Enter Here" value={invId} onChange={(e) =>onInputChange(e)} />
                         </div>
                         <div class="form-group">
                              <label for="exampleInputEmail1">Name</label>
-                             <input type="text" class="form-control" name="name"   placeholder="Enter Here" value={name} onChange={(e) =>onInputChange(e)} required/>
+                             <input type="text" class="form-control" name="name"   placeholder="Enter Here" value={name} onChange={(e) =>onInputChange(e)} />
                          </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Computers</label>
@@ -56,15 +56,15 @@ function UpdateInvoice() {
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Exchange Rate </label>
-                            <input type="text" class="form-control" name="exchangeRate"   placeholder="Enter Here" value={exchangeRate} onChange={(e) =>onInputChange(e)} required/>
+                            <input type="text" class="form-control" name="exchangeRate"   placeholder="Enter Here" value={exchangeRate} onChange={(e) =>onInputChange(e)} />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Price In PLN</label>
-                            <input type="text" class="form-control" name="invPriceInPln"   placeholder="Enter Here" value={invPriceInPln} onChange={(e) =>onInputChange(e)} required/>
+                            <input type="text" class="form-control" name="invPriceInPln"   placeholder="Enter Here" value={invPriceInPln} onChange={(e) =>onInputChange(e)} />
                         </div>
                         <div class="form-group">
                              <label for="exampleInputEmail1">Price In USD</label>
-                             <input type="text" class="form-control" name="invPriceInUsd"   placeholder="Enter Here" value={invPriceInUsd} onChange={(e) =>onInputChange(e)} required/>
+                             <input type="text" class="form-control" name="invPriceInUsd"   placeholder="Enter Here" value={invPriceInUsd} onChange={(e) =>onInputChange(e)} />
                          </div>
                          <div class="form-group">
                               <label for="exampleInputEmail1">Invoice Date</label>

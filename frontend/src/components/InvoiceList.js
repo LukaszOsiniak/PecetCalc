@@ -74,6 +74,19 @@ export default class InvoiceList extends Component {
             );
         };
 
+        sortByName = () => {
+            const arr = this.state.invoices.sort((a, b) => (a.name > b.name) ? 1: -1);
+            this.setState({invoices: arr});
+
+            console.log(JSON.stringify(this.state))
+        }
+
+        sortByDate = () => {
+            const arr = this.state.invoices.sort((a,b) => new Date(a.invDate) - new Date(b.invDate));
+            this.setState({invoices: arr});
+        }
+
+
        render(){
                 const {invoices, currentPage, totalPages,recordPerPage, search} = this.state;
 
@@ -86,16 +99,16 @@ export default class InvoiceList extends Component {
                       <button type="button" name="search" className="btn btn-info my-2 text-center mr-2" onClick={this.searchInvoice}>Search</button>
                       <button type="reset" className="btn btn-secondary text-center ml-5" style={{marginLeft:'10px'}} onClick={this.resetInvoice}>Clear</button>
                   </div>
-                     <Table sorted={this.state.sortOptions} bordered hover striped variant = "dark">
+                     <Table bordered hover striped variant = "dark">
                          <thead>
                                 <tr>
                                   <th>Number</th>
-                                  <th>Name</th>
+                                  <th>Name <Button size="sm" type="sort" onClick={this.sortByName}> Sort</Button></th>
                                   <th>Computers</th>
                                   <th>Exchange Rate</th>
                                   <th>Price In PLN</th>
                                   <th>Price In USD</th>
-                                  <th>Invoice Date</th>
+                                  <th>Invoice Date <Button size="sm" type="sort" onClick={this.sortByDate}> Sort</Button></th>
                                 </tr>
                               </thead>
                               <tbody>

@@ -1,6 +1,7 @@
 package com.example.PecetCalc.api;
 
 import com.example.PecetCalc.model.Invoice;
+import com.example.PecetCalc.util.Faktura;
 import com.example.PecetCalc.util.InvoiceModelAssembler;
 import com.example.PecetCalc.util.RecordNotFoundException;
 import com.example.PecetCalc.util.Util;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -46,13 +48,14 @@ public class InvoiceController {
     }
 
     @PostMapping()
-    public ResponseEntity addInvoice(@RequestBody Invoice invoice, @RequestParam Date date) throws URISyntaxException, IOException {
+    public ResponseEntity addInvoice(@RequestBody Invoice invoice, @RequestParam Date date) throws URISyntaxException, IOException, DatatypeConfigurationException {
         Double rate = Util.getRateAtDate(date).doubleValue();
         double invoiceSumUSD = Util.sumPriceOfAllComputers(invoice.getComputers());
         invoice.setInvPriceInUsd(Util.sumPriceOfAllComputers(invoice.getComputers()));
         invoice.setInvPriceInPln(invoiceSumUSD * rate);
         Invoice savedInvoice = invoiceRepository.save(invoice);
-        Util.serializeToXML(invoice);
+        Faktura faktura = Util.convert(invoice);
+        Util.serializeToXML(faktura);
         return ResponseEntity.created(new URI("/invoices" + savedInvoice.getInvId())).body(savedInvoice);
     }
 

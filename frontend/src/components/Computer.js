@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
         }
 
        initialState= {
-            cpuId: '', name: '', priceInUSD: '', priceInPLN: '', exchangeRate: ''
+            cpuId: '', name: '', priceInUSD: '', priceInPLN: '', exchangeRate: '', accDate:""
        }
 
        resetComputer = () => {
@@ -31,7 +31,8 @@ import { useNavigate } from "react-router-dom";
                name: this.state.name,
                 priceInUSD: this.state.priceInUSD,
                 priceInPLN:this.state.priceInPLN,
-                exchangeRate: this.state.exchangeRate
+                exchangeRate: this.state.exchangeRate,
+                accDate: this.state.accDate
             };
 
             axios.put('http://localhost:8080/computers', computer)
@@ -50,6 +51,7 @@ import { useNavigate } from "react-router-dom";
                 priceInUSD: this.state.priceInUSD,
                 priceInPLN: this.state.priceInPLN,
                 exchangeRate: this.state.exchangeRate,
+                accDate: this.state.accDate,
            };
 
            axios.post("http://localhost:8080/computers", computer).then((response) => {
@@ -66,7 +68,7 @@ import { useNavigate } from "react-router-dom";
        }
 
        render(){
-            const{cpuId, name, priceInUSD, priceInPLN, exchangeRate, invoice} = this.state;
+            const{cpuId, name, priceInUSD, priceInPLN, exchangeRate, invoice, accDate} = this.state;
 
        return (
                <Card className={"border border-dark bg-dark text-white"}>
@@ -123,6 +125,16 @@ import { useNavigate } from "react-router-dom";
                                   className={"bg-dark text-white"}
                                   placeholder="exchangeRate" />
                             </Form.Group>
+                            <Form.Group controlId="formGridExchangeRate">
+                            <Form.Label>Accounting Date</Form.Label>
+                            <Form.Control required autoComplete="off"
+                                type="text"
+                                name='accDate'
+                                value={accDate}
+                                onChange={this.computerChange}
+                                className={"bg-dark text-white"}
+                                placeholder="accDate" />
+                          </Form.Group>
                           <Button size="sm" variant="success" type="submit">
                             Submit
                           </Button> {' '}

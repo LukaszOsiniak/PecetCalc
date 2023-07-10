@@ -8,9 +8,9 @@ function UpdateComputer() {
         getComputerById();
     },[])
     const [computer, setComputer] = useState({
-         cpuId: '', name: '', priceInUSD: '', priceInPln: '', exchangeRate: ''
+         cpuId: '', name: '', priceInUSD: '', priceInPLN: '', exchangeRate: '', accDate:''
     });
-    const {cpuId, name, priceInUSD, priceInPln, exchangeRate } = computer;
+    const {cpuId, name, priceInUSD, priceInPLN, exchangeRate, accDate } = computer;
     const onInputChange = e =>{
         setComputer({...computer,[e.target.name]:e.target.value})
     }
@@ -56,11 +56,15 @@ function UpdateComputer() {
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Price In PLN</label>
-                            <input type="text" class="form-control" name="priceInPln"   placeholder="Enter Here" value={priceInPln} onChange={(e) =>onInputChange(e)} required/>
+                            <input type="text" class="form-control" name="priceInPLN"   placeholder="Enter Here" value={priceInPLN} onChange={(e) =>onInputChange(e)} required/>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Exchange Rate</label>
                             <input type="text" class="form-control" name="exchangeRate"   placeholder="Enter Here" value={exchangeRate} onChange={(e) =>onInputChange(e)} required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Accounting Date</label>
+                            <input type="text" class="form-control" name="accDate"   placeholder="Enter Here" value={accDate} onChange={(e) =>onInputChange(e)} required/>
                         </div>
                         <div className="container text-center">
                         <button type="submit" class="btn btn-outline-success my-2 text-center mr-2">Update Computer</button>

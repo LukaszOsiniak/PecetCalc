@@ -1,7 +1,6 @@
 package com.example.PecetCalc.api;
 
 import com.example.PecetCalc.model.Computer;
-import com.example.PecetCalc.model.Invoice;
 import com.example.PecetCalc.util.ComputerModelAssembler;
 import com.example.PecetCalc.util.RecordNotFoundException;
 import org.springframework.data.domain.Page;
@@ -55,9 +54,10 @@ public class ComputerController {
         currentComputer.setCpuId(computer.getCpuId());
         currentComputer.setName(computer.getName());
         currentComputer.setPriceInUSD(computer.getPriceInUSD());
-        currentComputer.setPriceInPln(computer.getPriceInPln());
+        currentComputer.setPriceInPLN(computer.getPriceInPLN());
         currentComputer.setExchangeRate(computer.getExchangeRate());
         currentComputer.setInvoice(computer.getInvoice());
+        currentComputer.setAccDate(computer.getAccDate());
         computerRepository.save(currentComputer);
 
         return ResponseEntity.ok(currentComputer);

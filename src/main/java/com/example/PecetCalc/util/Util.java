@@ -10,11 +10,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import javax.xml.datatype.DatatypeFactory;
 
 public class Util {
     public static BigDecimal getRateAtDate(Date date) {
@@ -43,18 +47,33 @@ public class Util {
         return sum;
     }
 
-    public static void serializeToXML(Invoice invoice) {
+    public static Faktura convert(Invoice invoice) throws DatatypeConfigurationException {
+        Faktura faktura = new Faktura();
+        List<Computer> list = invoice.getComputers();
+        for (Computer cpu : list) {
+            Faktura.Komputer komp = new Faktura.Komputer();
+            komp.setKosztPLN(cpu.getPriceInPLN());
+            GregorianCalendar cal = new GregorianCalendar();
+            cal.setTime(cpu.getAccDate());
+            XMLGregorianCalendar xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+            komp.setDataKsiegowania(xmlGregCal);
+            komp.setKosztUSD(cpu.getPriceInUSD());
+            komp.setNazwa(cpu.getName());
+            faktura.getKomputer().add(komp);
+        }
+        return faktura;
+    }
+
+    public static void serializeToXML(Faktura faktura) {
 
         try {
-            JAXBContext context = JAXBContext.newInstance(Invoice.class);
+            JAXBContext context = JAXBContext.newInstance(Faktura.class);
             Marshaller jaxbMarshaller = context.createMarshaller();
 
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String formattedDate = simpleDateFormat.format(invoice.getInvDate().getTime());
-            String pathname = invoice.getName() + formattedDate + ".xml";
+            String pathname = "Faktura" + faktura.getKomputer().get(1).kosztPLN + ".xml";
             File file = new File(pathname);
-            jaxbMarshaller.marshal(invoice, file);
+            jaxbMarshaller.marshal(faktura, file);
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }

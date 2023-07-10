@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import jakarta.xml.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -14,14 +15,15 @@ public class Computer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @XmlTransient
     Long cpuId;
     String name;
     Double priceInUSD;
-    Double priceInPln;
+    Double priceInPLN;
     Double exchangeRate;
     @ManyToOne
     Invoice invoice;
+
+    Date accDate;
 
     public Long getCpuId() {
         return cpuId;
@@ -43,8 +45,8 @@ public class Computer {
         return priceInUSD;
     }
 
-    public Double getPriceInPln() {
-        return priceInPln;
+    public Double getPriceInPLN() {
+        return priceInPLN;
     }
 
     public Double getExchangeRate() {
@@ -67,9 +69,9 @@ public class Computer {
         }
     }
 
-    public void setPriceInPln(Double priceInPln) {
-        if (priceInPln > 0) {
-            this.priceInPln = priceInPln;
+    public void setPriceInPLN(Double priceInPLN) {
+        if (priceInPLN > 0) {
+            this.priceInPLN = priceInPLN;
         } else {
             throw new IllegalArgumentException("Price in PLN is not valid");
         }
@@ -81,6 +83,14 @@ public class Computer {
         } else {
             throw new IllegalArgumentException("Exchange rate is not valid");
         }
+    }
+
+    public Date getAccDate() {
+        return accDate;
+    }
+
+    public void setAccDate(Date accDate) {
+        this.accDate = accDate;
     }
 
     public Computer() {
@@ -97,11 +107,11 @@ public class Computer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Computer computer = (Computer) o;
-        return Objects.equals(cpuId, computer.cpuId) && Objects.equals(name, computer.name) && Objects.equals(priceInUSD, computer.priceInUSD) && Objects.equals(priceInPln, computer.priceInPln) && Objects.equals(exchangeRate, computer.exchangeRate) && Objects.equals(invoice, computer.invoice);
+        return Objects.equals(cpuId, computer.cpuId) && Objects.equals(name, computer.name) && Objects.equals(priceInUSD, computer.priceInUSD) && Objects.equals(priceInPLN, computer.priceInPLN) && Objects.equals(exchangeRate, computer.exchangeRate) && Objects.equals(invoice, computer.invoice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cpuId, name, priceInUSD, priceInPln, exchangeRate, invoice);
+        return Objects.hash(cpuId, name, priceInUSD, priceInPLN, exchangeRate, invoice);
     }
 }

@@ -5,6 +5,11 @@ import {Card, Button, Form} from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+
  class Invoice extends Component {
 
         constructor(props){
@@ -72,7 +77,7 @@ import { useNavigate } from "react-router-dom";
 
        return (
                <Card className={"border border-dark bg-dark text-white"}>
-                  <Card.Header> Add Invoice </Card.Header>
+                  <Card.Header><FontAwesomeIcon icon={faPlus} /> Add Invoice </Card.Header>
                   <Card.Body>
                         <Form onReset={this.resetInvoice} onSubmit={this.submitInvoice} id="computerFormId">
                            <Form.Group controlId="formGridCpuId">

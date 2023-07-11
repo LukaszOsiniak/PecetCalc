@@ -4,6 +4,13 @@ import { Card, Table, ButtonGroup, Button, InputGroup, FormControl} from 'react-
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import dayjs from "dayjs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faComputer,
+    faArrowUp,
+    faArrowDown,
+    faFileInvoice,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default class InvoiceList extends Component {
 
@@ -74,15 +81,23 @@ export default class InvoiceList extends Component {
             );
         };
 
-        sortByName = () => {
+        sortByNameASC = () => {
             const arr = this.state.invoices.sort((a, b) => (a.name > b.name) ? 1: -1);
             this.setState({invoices: arr});
-
-            console.log(JSON.stringify(this.state))
         }
 
-        sortByDate = () => {
+        sortByNameDESC = () => {
+            const arr = this.state.invoices.sort((a, b) => (a.name < b.name) ? 1: -1);
+            this.setState({invoices: arr});
+        }
+
+        sortByDateASC = () => {
             const arr = this.state.invoices.sort((a,b) => new Date(a.invDate) - new Date(b.invDate));
+            this.setState({invoices: arr});
+        }
+
+        sortByDateDESC = () => {
+            const arr = this.state.invoices.sort((a,b) => new Date(b.invDate) - new Date(a.invDate));
             this.setState({invoices: arr});
         }
 
@@ -92,7 +107,7 @@ export default class InvoiceList extends Component {
 
              return (
                <Card className={"border border-dark bg-dark text-white"}>
-                  <Card.Header> Invoices List </Card.Header>
+                  <Card.Header> <FontAwesomeIcon icon={faFileInvoice} /> Invoices List </Card.Header>
                   <Card.Body>
                   <div className="form-group mb-2">
                       <input type="text" className="form-control" name="search" size="50"  placeholder="Search Invoices Names Here" value={search}  onChange={this.searchBox}/>
@@ -103,12 +118,14 @@ export default class InvoiceList extends Component {
                          <thead>
                                 <tr>
                                   <th>Number</th>
-                                  <th>Name <Button size="sm" type="sort" onClick={this.sortByName}> Sort</Button></th>
+                                  <th>Name <Button size="sm" type="button"  onClick={this.sortByNameASC}><FontAwesomeIcon icon={faArrowUp} /></Button>
+                                           <Button size="sm" type="button"  onClick={this.sortByNameDESC}> <FontAwesomeIcon icon={faArrowDown} /></Button></th>
                                   <th>Computers</th>
                                   <th>Exchange Rate</th>
                                   <th>Price In PLN</th>
                                   <th>Price In USD</th>
-                                  <th>Invoice Date <Button size="sm" type="sort" onClick={this.sortByDate}> Sort</Button></th>
+                                  <th>Invoice Date  <Button size="sm" type="sort"  onClick={this.sortByDateASC}><FontAwesomeIcon icon={faArrowUp} /></Button>
+                                                    <Button size="sm" type="sort"  onClick={this.sortByDateDESC}> <FontAwesomeIcon icon={faArrowDown} /></Button></th>
                                 </tr>
                               </thead>
                               <tbody>

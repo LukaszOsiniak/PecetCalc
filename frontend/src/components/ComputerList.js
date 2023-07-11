@@ -4,6 +4,12 @@ import {  Card, Table, ButtonGroup, Button, InputGroup, FormControl} from 'react
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import dayjs from "dayjs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faComputer,
+    faArrowUp,
+    faArrowDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default class ComputerList extends Component {
 
@@ -75,13 +81,23 @@ export default class ComputerList extends Component {
             );
         };
 
-        sortByName = () => {
+        sortByNameASC = () => {
             const arr = this.state.computers.sort((a, b) => (a.name > b.name) ? 1: -1);
-            this.setState({invoices: arr});
+            this.setState({computers: arr});
         }
 
-        sortByDate = () => {
+        sortByNameDESC = () => {
+            const arr = this.state.computers.sort((a, b) => (a.name < b.name) ? 1: -1);
+            this.setState({computers: arr});
+        }
+
+        sortByDateASC = () => {
             const arr = this.state.computers.sort((a,b) => new Date(a.accDate) - new Date(b.accDate));
+            this.setState({computers: arr});
+        }
+
+        sortByDateDESC = () => {
+            const arr = this.state.computers.sort((a,b) => new Date(b.accDate) - new Date(a.accDate));
             this.setState({computers: arr});
         }
 
@@ -91,7 +107,7 @@ export default class ComputerList extends Component {
 
              return (
                <Card className={"border border-dark bg-dark text-white"}>
-                  <Card.Header> Computer List </Card.Header>
+                  <Card.Header> <FontAwesomeIcon icon={faComputer} /> Computer List </Card.Header>
                   <Card.Body>
                   <div className="form-group mb-2">
                       <input type="text" className="form-control" name="search" size="50"  placeholder="Search Computer Names Here" value={search}  onChange={this.searchBox}/>
@@ -102,12 +118,14 @@ export default class ComputerList extends Component {
                          <thead>
                                 <tr>
                                   <th>Number </th>
-                                  <th>Name <Button size="sm" type="sort" onClick={this.sortByName}> Sort</Button></th>
+                                  <th>Name <Button size="sm" type="button"  onClick={this.sortByNameASC}><FontAwesomeIcon icon={faArrowUp} /></Button>
+                                   <Button size="sm" type="button"  onClick={this.sortByNameDESC}> <FontAwesomeIcon icon={faArrowDown} /></Button></th>
                                   <th>Price In USD</th>
                                   <th>Price In PLN</th>
                                   <th>Exchange Rate</th>
                                   <th>Invoice</th>
-                                  <th>Accounting Date <Button size="sm" type="sort" onClick={this.sortByDate}> Sort</Button> </th>
+                                  <th>Accounting Date <Button size="sm" type="sort"  onClick={this.sortByDateASC}> <FontAwesomeIcon icon={faArrowUp} /></Button>
+                                                      <Button size="sm" type="sort"   onClick={this.sortByDateDESC}> <FontAwesomeIcon icon={faArrowDown} /></Button></th>
                                 </tr>
                          </thead>
                          <tbody>

@@ -10,9 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Configuration
 public class LoadDatabase {
@@ -42,16 +40,16 @@ public class LoadDatabase {
     CommandLineRunner initializeDatabase(InvoiceRepository invoiceRepository) {
 
         return args -> {
-            log.info("Preloading " + invoiceRepository.save(new Invoice(1L, "First", list, 0D, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(2L, "Second", list, 0D, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(3L, "Third", list, 0D, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(4L, "Fourth", list, 0D, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(5L, "Fifth", list, 0D, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(6L, "Sixth", list, 0D, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(7L, "Seventh", list, 0D, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(8L, "Eighth", list, 0D, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(9L, "Ninth", list, 0D, firstDate)));
-            log.info("Preloading " + invoiceRepository.save(new Invoice(10L, "Tenth", list, 0D, firstDate)));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(1L, "First", list, 0D,  new GregorianCalendar(2023, Calendar.JULY, 2).getTime())));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(2L, "Second", list, 0D, new GregorianCalendar(2023, Calendar.JULY, 23).getTime())));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(3L, "Third", list, 0D, new GregorianCalendar(2023, Calendar.JULY, 1).getTime())));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(4L, "Fourth", list, 0D, new GregorianCalendar(2023, Calendar.JULY, 11).getTime())));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(5L, "Fifth", list, 0D, new GregorianCalendar(2023, Calendar.JULY, 5).getTime())));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(6L, "Sixth", list, 0D, new GregorianCalendar(2023, Calendar.JULY, 16).getTime())));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(7L, "Seventh", list, 0D, new GregorianCalendar(2023, Calendar.JULY, 23).getTime())));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(8L, "Eighth", list, 0D, new GregorianCalendar(2023, Calendar.JULY, 19).getTime())));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(9L, "Ninth", list, 0D, new GregorianCalendar(2023, Calendar.JULY, 23).getTime())));
+            log.info("Preloading " + invoiceRepository.save(new Invoice(10L, "Tenth", list, 0D, new GregorianCalendar(2023, Calendar.JULY, 30).getTime())));
             log.info(Util.getRateAtDate(firstDate).toString());
         };
     }

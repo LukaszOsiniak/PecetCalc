@@ -1,6 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios';
 import {useParams} from "react-router-dom";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons"
+
 function UpdateComputer() {
     const {id} = useParams();
 
@@ -39,7 +45,7 @@ function UpdateComputer() {
             <div className="container">
             <div className="border border-dark bg-dark text-white">
                 <div class="jumbotron">
-                    <h4 >Update Computer</h4>
+                    <h4 ><FontAwesomeIcon icon={faPenToSquare} /> Update Computer</h4>
                     <div>
                     <form onSubmit={e => FormHandle(e)}>
                         <div class="form-group">
